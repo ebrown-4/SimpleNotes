@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";            // FIXED — must come from firebase.js
-import { getUserNotes } from "../firestore";   // correct
+import { auth } from "../firebase";
+import { getNotes } from "../firestore";   // FIXED — correct function name
 import NoteCard from "../components/NoteCard";
 import SearchBar from "../components/SearchBar";
 
@@ -13,7 +13,7 @@ export default function Notes() {
     useEffect(() => {
         async function loadNotes() {
             if (user) {
-                const data = await getUserNotes(user.uid);
+                const data = await getNotes(user.uid);   // FIXED
                 setNotes(data);
             }
         }
