@@ -1,0 +1,274 @@
+/* ================================
+   GLOBAL STYLES
+================================ */
+body {
+  font-family: Arial, sans-serif;
+  background: #E6E6E6;
+  margin: 0;
+  padding: 0;
+  color: #000000;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 10px 0;
+  font-weight: bold;
+}
+
+.page-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* ================================
+   NAVBAR
+================================ */
+.navbar {
+  background: #000000;
+  color: #FFCC00;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left h2 {
+  margin: 0;
+  color: #FFCC00;
+}
+
+.nav-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.navbar a {
+  color: #FFCC00;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  color: #E6B800;
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  color: #FFCC00;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.logout-btn:hover {
+  color: #E6B800;
+}
+
+/* ================================
+   HOME PAGE
+================================ */
+.home-container {
+  text-align: center;
+  margin-top: 60px;
+}
+
+/* ================================
+   SEARCH BAR
+================================ */
+.search-bar {
+  margin: 20px 0;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #FFCC00;
+  border-radius: 6px;
+  font-size: 16px;
+  background: #FFFFFF;
+}
+
+/* ================================
+   FORM INPUT
+================================ */
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-input label {
+  font-weight: bold;
+  color: #000000;
+}
+
+.form-input input {
+  padding: 10px;
+  border: 2px solid #FFCC00;
+  border-radius: 6px;
+  font-size: 16px;
+  background: #FFFFFF;
+}
+
+/* ================================
+   NOTES GRID
+================================ */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* ================================
+   NOTE CARD
+================================ */
+.note-card {
+  background: #FFFFFF;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 6px solid #FFCC00;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.note-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.delete-btn {
+  background: #000000;
+  color: #FFCC00;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.delete-btn:hover {
+  background: #4D4D4D;
+}
+
+/* ================================
+   ADD / EDIT NOTE FORM
+================================ */
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 450px;
+  margin-top: 20px;
+}
+
+.note-form input,
+.note-form textarea,
+.note-form select {
+  padding: 10px;
+  border: 2px solid #FFCC00;
+  border-radius: 6px;
+  font-size: 16px;
+  background: #FFFFFF;
+}
+
+.note-form textarea {
+  min-height: 120px;
+}
+
+.note-form button {
+  background: #FFCC00;
+  color: #000000;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.note-form button:hover {
+  background: #E6B800;
+}
+
+/* ================================
+   AUTH PAGES (Login / Register)
+================================ */
+.auth-container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #FFFFFF;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 6px solid #FFCC00;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-form input {
+  padding: 10px;
+  border: 2px solid #FFCC00;
+  border-radius: 6px;
+}
+
+.auth-form button {
+  background: #FFCC00;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-form button:hover {
+  background: #E6B800;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* ================================
+   PROFILE PAGE
+================================ */
+.profile-container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #FFFFFF;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 6px solid #FFCC00;
+  text-align: center;
+}
+
+.profile-container h2 {
+  margin-bottom: 10px;
+}
+
+.profile-container p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* ================================
+   FOOTER
+================================ */
+.footer {
+  text-align: center;
+  padding: 20px;
+  color: #4D4D4D;
+  font-size: 14px;
+}
