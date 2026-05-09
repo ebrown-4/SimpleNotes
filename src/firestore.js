@@ -1,78 +1,56 @@
-// src/pages/AddNote.jsx
+// src/firestore.js
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { addNote } from "../firestore";
-import { auth } from "../firebase";
+import {
+    collection,
+    addDoc,
+    getDocs,
+    getDoc,
+    doc,
+    updateDoc,
+    deleteDoc,
+    query,
+    where
+} from "firebase/firestore";
 
-export default function AddNote() {
-    const navigate = useNavigate();
+import { db } from "./firebase";
 
-    const [title, setTitle] = useState("");
-    const [category, setCategory] = useState("");
-    const [content, setContent] = useState("");
-    const [error, setError] = useState("");
+// CREATE NOTE
+export async function addNote(note) {
+    const docRef = await addDoc(collection(db, "notes"), note);
+    return docRef.id;
+}
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+// READ ALL NOTES FOR USER
+export async function getNotes(userId) {
+    const q = query(collection(db, "notes"), where("userId", "==", userId));
+    const snapshot = await getDocs(q);
 
-        if (!title || !category || !content) {
-            setError("All fields are required.");
-            return;
-        }
+    return snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+}
 
-        const user = auth.currentUser;
-        if (!user) {
-            setError("You must be logged in.");
-            return;
-        }
+// READ SINGLE NOTE BY ID
+export async function getNoteById(id) {
+    const docRef = doc(db, "notes", id);
+    const docSnap = await getDoc(docRef);
 
-        const newNote = {
-            title,
-            category,
-            content,
-            userId: user.uid,
-            createdAt: Date.now()
-        };
+    if (docSnap.exists()) {
+        return { id: docSnap.id, ...docSnap.data() };
+    } else {
+        return null;
+    }
+}
 
-        try {
-            await addNote(newNote);
-            navigate("/notes");
-        } catch (err) {
-            console.error(err);
-            setError("Failed to add note.");
-        }
-    };
+// UPDATE NOTE
+export async function updateNote(id, updatedFields) {
+    const docRef = doc(db, "notes", id);
+    await updateDoc(docRef, updatedFields);
+}
 
-    return (
-        <div className="page-container">
-            <h2>Add Note</h2>
-
-            {error && <p className="error">{error}</p>}
-
-            <form onSubmit={handleSubmit} className="note-form">
-                <input
-                    type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-
-                <input
-                    type="text"
-                    placeholder="Category"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                />
-
-                <textarea
-                    placeholder="Note content..."
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                />
-
-                <button type="submit">Add Note</button>
-            </form>
-        </div>
-    );
+// DELETE NOTE
+export async function deleteNote(id) {
+    const docRef = doc(db, "notes", id);
+    await deleteDoc(docRef);
 }
