@@ -9,7 +9,7 @@ export default function AddNote() {
     const navigate = useNavigate();
 
     const [title, setTitle] = useState("");
-    the[category, setCategory] = useState("");
+    const [category, setCategory] = useState("");   // ✅ FIXED
     const [content, setContent] = useState("");
     const [error, setError] = useState("");
 
