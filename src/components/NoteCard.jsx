@@ -1,24 +1,29 @@
 import { Link } from "react-router-dom";
-import { deleteNote } from "../firestore";
 
 export default function NoteCard({ note, onDelete }) {
-    const handleDelete = async () => {
-        await deleteNote(note.id);
-        onDelete(note.id); // notify parent to refresh UI
-    };
-
     return (
         <div className="note-card">
-            <h3>{note.title}</h3>
-            <p><strong>Category:</strong> {note.category}</p>
-            <p>{note.content}</p>
+            <h2>{note.title}</h2>
 
-            <div className="note-card-actions">
-                <Link to={`/edit/${note.id}`} className="btn-edit">
+            {note.category && (
+                <p className="note-category">{note.category}</p>
+            )}
+
+            <p className="note-content">
+                {note.content.length > 100
+                    ? note.content.substring(0, 100) + "..."
+                    : note.content}
+            </p>
+
+            <div className="note-actions">
+                <Link to={`/edit/${note.id}`} className="edit-btn">
                     Edit
                 </Link>
 
-                <button onClick={handleDelete} className="btn-delete">
+                <button
+                    className="delete-btn"
+                    onClick={() => onDelete(note.id)}
+                >
                     Delete
                 </button>
             </div>

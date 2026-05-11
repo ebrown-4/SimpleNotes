@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import { getNotes } from "../firestore";   // FIXED — correct function name
+import { getNotes, deleteNote } from "../firestore";
 import NoteCard from "../components/NoteCard";
 import SearchBar from "../components/SearchBar";
 
@@ -10,19 +10,33 @@ export default function Notes() {
     const [notes, setNotes] = useState([]);
     const [search, setSearch] = useState("");
 
-    useEffect(() => {
-        async function loadNotes() {
-            if (user) {
-                const data = await getNotes(user.uid);   // FIXED
-                setNotes(data);
-            }
+    // Load notes
+    async function loadNotes() {
+        if (user) {
+            const data = await getNotes(user.uid);
+            setNotes(data);
         }
+    }
+
+    useEffect(() => {
         loadNotes();
     }, [user]);
 
-    const filteredNotes = notes.filter((note) =>
-        note.title.toLowerCase().includes(search.toLowerCase())
-    );
+    // Delete handler
+    async function handleDelete(id) {
+        await deleteNote(id);
+        loadNotes(); // refresh UI
+    }
+
+    // Improved search (title + content + category)
+    const filteredNotes = notes.filter((note) => {
+        const term = search.toLowerCase();
+        return (
+            note.title.toLowerCase().includes(term) ||
+            note.content.toLowerCase().includes(term) ||
+            (note.category && note.category.toLowerCase().includes(term))
+        );
+    });
 
     return (
         <div>
@@ -35,7 +49,11 @@ export default function Notes() {
                     <p>No notes found.</p>
                 ) : (
                     filteredNotes.map((note) => (
-                        <NoteCard key={note.id} note={note} />
+                        <NoteCard
+                            key={note.id}
+                            note={note}
+                            onDelete={handleDelete} // pass delete handler
+                        />
                     ))
                 )}
             </div>

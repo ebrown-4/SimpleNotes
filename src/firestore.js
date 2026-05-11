@@ -1,5 +1,3 @@
-// src/firestore.js
-
 import {
     collection,
     addDoc,
