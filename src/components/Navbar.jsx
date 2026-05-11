@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
@@ -20,7 +21,7 @@ export default function Navbar() {
                 ) : (
                     <>
                         <Link to="/notes">Notes</Link>
-                        <Link to="/add">Add Note</Link>   {/* FIXED */}
+                        <Link to="/add">Add Note</Link>
                         <Link to="/profile">Profile</Link>
                         <button
                             className="logout-btn"
