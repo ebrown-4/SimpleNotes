@@ -45,16 +45,31 @@ h3 {
   align-items: center;
 }
 
+/* GOLD UNDERLINE HOVER ANIMATION */
 .navbar a {
+  position: relative;
   color: #FFCC00;
   text-decoration: none;
   font-weight: bold;
+  padding-bottom: 3px;
 }
 
-.navbar a:hover {
-  color: #E6B800;
+.navbar a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background-color: #FFCC00;
+  transition: width 0.25s ease-in-out;
 }
 
+.navbar a:hover::after {
+  width: 100%;
+}
+
+/* LOGOUT BUTTON (with underline animation) */
 .logout-btn {
   background: transparent;
   border: none;
@@ -62,6 +77,23 @@ h3 {
   cursor: pointer;
   font-weight: bold;
   font-size: 15px;
+  padding-bottom: 3px;
+  position: relative;
+}
+
+.logout-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background-color: #FFCC00;
+  transition: width 0.25s ease-in-out;
+}
+
+.logout-btn:hover::after {
+  width: 100%;
 }
 
 .logout-btn:hover {

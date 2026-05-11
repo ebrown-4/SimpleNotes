@@ -1,78 +1,39 @@
-// src/pages/AddNote.jsx
+// src/components/Navbar.jsx
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { addNote } from "../firestore";
+import { Link } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 
-export default function AddNote() {
-    const navigate = useNavigate();
-
-    const [title, setTitle] = useState("");
-    const [category, setCategory] = useState("");   // ✅ FIXED
-    const [content, setContent] = useState("");
-    const [error, setError] = useState("");
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!title || !category || !content) {
-            setError("All fields are required.");
-            return;
-        }
-
-        const user = auth.currentUser;
-        if (!user) {
-            setError("You must be logged in.");
-            return;
-        }
-
-        const newNote = {
-            title,
-            category,
-            content,
-            userId: user.uid,
-            createdAt: Date.now()
-        };
-
-        try {
-            await addNote(newNote);
-            navigate("/notes");
-        } catch (err) {
-            console.error(err);
-            setError("Failed to add note.");
-        }
-    };
+export default function Navbar() {
+    const [user] = useAuthState(auth);
 
     return (
-        <div className="page-container">
-            <h2>Add Note</h2>
+        <nav className="navbar">
+            <div className="nav-left">
+                <h2>SimpleNotes</h2>
+            </div>
 
-            {error && <p className="error">{error}</p>}
+            <div className="nav-right">
+                {!user ? (
+                    <>
+                        <Link to="/login">Login</Link>
+                        <Link to="/register">Register</Link>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/notes">Notes</Link>
+                        <Link to="/add">Add Note</Link>
+                        <Link to="/profile">Profile</Link>
 
-            <form onSubmit={handleSubmit} className="note-form">
-                <input
-                    type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-
-                <input
-                    type="text"
-                    placeholder="Category"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                />
-
-                <textarea
-                    placeholder="Note content..."
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                />
-
-                <button type="submit">Add Note</button>
-            </form>
-        </div>
+                        <button
+                            className="logout-btn"
+                            onClick={() => auth.signOut()}
+                        >
+                            Logout
+                        </button>
+                    </>
+                )}
+            </div>
+        </nav>
     );
 }

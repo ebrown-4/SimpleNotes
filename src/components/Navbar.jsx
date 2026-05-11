@@ -20,6 +20,7 @@ export default function Navbar() {
                 ) : (
                     <>
                         <Link to="/notes">Notes</Link>
+                        <Link to="/add">Add Note</Link>   {/* FIXED */}
                         <Link to="/profile">Profile</Link>
                         <button
                             className="logout-btn"
