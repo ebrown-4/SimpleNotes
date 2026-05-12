@@ -1,3 +1,4 @@
+// src/pages/Notes.jsx
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
@@ -10,7 +11,6 @@ export default function Notes() {
     const [notes, setNotes] = useState([]);
     const [search, setSearch] = useState("");
 
-    // Load notes
     async function loadNotes() {
         if (user) {
             const data = await getNotes(user.uid);
@@ -22,13 +22,11 @@ export default function Notes() {
         loadNotes();
     }, [user]);
 
-    // Delete handler
     async function handleDelete(id) {
         await deleteNote(id);
-        loadNotes(); // refresh UI
+        loadNotes();
     }
 
-    // Improved search (title + content + category)
     const filteredNotes = notes.filter((note) => {
         const term = search.toLowerCase();
         return (
@@ -39,9 +37,8 @@ export default function Notes() {
     });
 
     return (
-        <div>
+        <div className="page-container">
             <h1>Your Notes</h1>
-
             <SearchBar searchTerm={search} setSearchTerm={setSearch} />
 
             <div className="notes-grid">
@@ -49,11 +46,7 @@ export default function Notes() {
                     <p>No notes found.</p>
                 ) : (
                     filteredNotes.map((note) => (
-                        <NoteCard
-                            key={note.id}
-                            note={note}
-                            onDelete={handleDelete} // pass delete handler
-                        />
+                        <NoteCard key={note.id} note={note} onDelete={handleDelete} />
                     ))
                 )}
             </div>

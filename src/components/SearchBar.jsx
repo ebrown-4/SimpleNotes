@@ -1,3 +1,4 @@
+// src/components/SearchBar.jsx
 export default function SearchBar({ searchTerm, setSearchTerm }) {
     return (
         <div className="search-bar">

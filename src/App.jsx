@@ -17,7 +17,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 export default function App() {
   return (
     <div className="app-container">
-      <Navbar /> {/* ✅ Only one Navbar here */}
+      <Navbar />
 
       <main className="main-content">
         <Routes>
@@ -35,7 +35,6 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/add"
             element={
@@ -44,7 +43,6 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/edit/:id"
             element={
@@ -53,7 +51,6 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/profile"
             element={
