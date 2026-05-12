@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 
 export default function Navbar() {
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
 
     return (
         <nav className="navbar">
@@ -13,7 +13,11 @@ export default function Navbar() {
             </div>
 
             <div className="nav-right">
-                {!user ? (
+                {loading ? (
+                    <>
+                        <span>Loading...</span>
+                    </>
+                ) : !user ? (
                     <>
                         <Link to="/login">Login</Link>
                         <Link to="/register">Register</Link>
@@ -23,10 +27,7 @@ export default function Navbar() {
                         <Link to="/notes">Notes</Link>
                         <Link to="/add">Add Note</Link>
                         <Link to="/profile">Profile</Link>
-                        <button
-                            className="logout-btn"
-                            onClick={() => auth.signOut()}
-                        >
+                        <button className="logout-btn" onClick={() => auth.signOut()}>
                             Logout
                         </button>
                     </>

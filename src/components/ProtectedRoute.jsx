@@ -6,7 +6,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 export default function ProtectedRoute({ children }) {
     const [user, loading] = useAuthState(auth);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return null; // prevents premature redirect
+
     if (!user) return <Navigate to="/login" replace />;
 
     return children;

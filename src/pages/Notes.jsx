@@ -1,5 +1,5 @@
 // src/pages/Notes.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { getNotes, deleteNote } from "../firestore";
@@ -11,16 +11,16 @@ export default function Notes() {
     const [notes, setNotes] = useState([]);
     const [search, setSearch] = useState("");
 
-    async function loadNotes() {
+    const loadNotes = useCallback(async () => {
         if (user) {
             const data = await getNotes(user.uid);
             setNotes(data);
         }
-    }
+    }, [user]);
 
     useEffect(() => {
         loadNotes();
-    }, [user]);
+    }, [loadNotes]);
 
     async function handleDelete(id) {
         await deleteNote(id);
